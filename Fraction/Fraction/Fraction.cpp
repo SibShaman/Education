@@ -17,14 +17,100 @@ using namespace std;
 
 class Fraction
 {
-	double namerator_one;
-	double denominator_one;
-	double namerator_two;
-	double denominator_two;
+	int namerator_one;
+	int denominator_one;
+	int namerator_two;
+	int denominator_two;
 
 
 public:
-	Fraction();
+	
+	//GET methods
+	int get_namerator_one()const
+	{
+		return namerator_one;
+	}	
+	int get_namerator_two()const
+	{
+		return namerator_two;
+	}	
+	int get_denominator_one()const
+	{
+		return denominator_one;
+	}	
+	int get_denominator_two()const
+	{
+		return denominator_two;
+	}
+	
+	//SET methods
+	void set_namerator_one(int namerator_one)
+	{
+		this->namerator_one = namerator_one;
+	}
+	void set_namerator_two(int namerator_two)
+	{
+		this->namerator_two = namerator_two;
+	}
+	void set_denominator_one(int denominator_one)
+	{
+		this->denominator_one = denominator_one;
+	}
+	void set_denominator_two(int denominator_two)
+	{
+		this->denominator_two = denominator_two;
+	}
+	
+
+
+	Fraction operator+()
+	{
+
+	}
+
+	Fraction operator-()
+	{
+
+	}
+
+	Fraction operator*()
+	{
+
+	}
+	Fraction operator/()
+	{
+
+	}	
+	Fraction operator+=()
+	{
+
+	}	
+	Fraction operator-=()
+	{
+
+	}	
+	Fraction operator*=()
+	{
+
+	}	
+	Fraction operator/=()
+	{
+
+	}
+
+
+
+
+
+	//Default constraction
+	Fraction()
+	{
+		namerator_one = 0;
+		denominator_one = 0;
+		namerator_two = 0;
+		denominator_two = 0;
+		//cout << "Default Constraction" << endl;
+	}
 
 
 	~Fraction();
