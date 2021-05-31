@@ -121,6 +121,7 @@ public:
 		cin >> namerator_one;
 		cout << "Введите значение знаменателя первой дроби\n";
 		cin >> denominator_one;
+
 		cout << "Введите значение числителя второй дроби\n";
 		cin >> namerator_two;
 		cout << "Введите значение знаменателя второй дроби\n";
