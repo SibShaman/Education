@@ -72,12 +72,6 @@ public:
 	}
 
 	/*
-
-	Fraction operator+()
-	{
-
-	}
-
 	Fraction operator-()
 	{
 
@@ -108,6 +102,17 @@ public:
 
 	}
 */
+
+
+
+
+
+/*
+	-to_improper();		//Переводит правильную дробь в неправильную: 2(3/4) => 11/4
+	-reduce();			//Сокращает дробь: 5/10 => 1/2;
+*/
+
+
 
 
 	void input_values()
@@ -141,6 +146,63 @@ Fraction::~Fraction()
 {
 }
 */
+
+void to_proper(const Fraction& obj)		//Неправильную дробь переводит в правильную: 11/4 => 2(3/4)
+{
+	//взять числитель, потом знаменатель, сравнить, если числитель больше знаменателя, тогда
+	//разделить, остаток от деления оставить в числителе, а целое значение поставить перед дробью
+
+	if (obj.get_namerator_one() > obj.get_denominator_one())
+	{
+		int res, res2;
+		res = obj.get_namerator_one() % obj.get_denominator_one();
+		res2 = obj.get_namerator_one();
+		//obj.get_namerator_one() = res;
+
+
+		cout << res << res2 << "/" << obj.get_namerator_one() << endl;				
+	}else 
+		cout << obj.get_namerator_one() << "/" << obj.get_denominator_one() << endl;
+	
+	if (obj.get_namerator_two() > obj.get_denominator_two())
+	{
+		int res, res2;
+		res = obj.get_namerator_two() % obj.get_denominator_two();
+		res2 = obj.get_namerator_two();
+
+		cout << res << res2 << "/" << obj.get_namerator_one() << endl;				
+	}else 
+		cout << obj.get_namerator_two() << "/" << obj.get_denominator_two() << endl;
+
+
+
+	
+
+}
+/*
+Fraction operator+(const Fraction& left, const Fraction& right)
+{
+
+
+
+}
+*/
+
+/*
+Point operator+(const Point& left, const Point& right) //передача по ссылке, const чтобы не изменялись объекты за классом, 	 
+													   //для сохранности данных, что было бы невозможно если просто передавать 
+													   //по ссылке, можно по значению без & и const, но тогда требуется больше 
+													   //памяти , так как класс использует конструктор копирования
+
+{
+	Point result;
+	result.set_x(left.get_x() + right.get_x());
+	result.set_y(left.get_y() + right.get_y());
+	//left.get_x(123); //изменит значение х если не использовать const, при передаче по ссылке
+	return result;
+}
+*/
+
 
 int main()
 {
@@ -179,6 +241,9 @@ int main()
 				{
 				case 1:
 				{
+					to_proper(A);
+
+
 
 				}
 				break;
