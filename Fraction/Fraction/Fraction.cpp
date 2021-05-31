@@ -181,29 +181,26 @@ void to_improper()		//Переводит правильную дробь в не
 
 
 }
-/*
+
 Fraction operator+(const Fraction& left, const Fraction& right)
 {
+	//для сложения дробей надо найти общий знаменатель
+	//после этого просто сложить числители(полученные) и сократить дробь
 
 
-
-}
-*/
-
-/*
-Point operator+(const Point& left, const Point& right) //передача по ссылке, const чтобы не изменялись объекты за классом, 	 
-													   //для сохранности данных, что было бы невозможно если просто передавать 
-													   //по ссылке, можно по значению без & и const, но тогда требуется больше 
-													   //памяти , так как класс использует конструктор копирования
-
-{
-	Point result;
-	result.set_x(left.get_x() + right.get_x());
-	result.set_y(left.get_y() + right.get_y());
-	//left.get_x(123); //изменит значение х если не использовать const, при передаче по ссылке
+	Fraction result;
+	
+	/*
+	result.set_namerator_one(left.get_namerator_one() + right.get_namerator_one());	
+	result.set_namerator_two(left.get_namerator_two() + right.get_namerator_two());	
+	result.set_denominator_one(left.get_denominator_one() + right.get_denominator_one());	
+	result.set_denominator_two(left.get_denominator_two() + right.get_denominator_two());
+	*/
+	
 	return result;
 }
-*/
+
+
 
 
 int main()
