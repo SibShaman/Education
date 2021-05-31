@@ -149,34 +149,36 @@ Fraction::~Fraction()
 
 void to_proper(const Fraction& obj)		//Неправильную дробь переводит в правильную: 11/4 => 2(3/4)
 {
-	//взять числитель, потом знаменатель, сравнить, если числитель больше знаменателя, тогда
-	//разделить, остаток от деления оставить в числителе, а целое значение поставить перед дробью
-
 	if (obj.get_namerator_one() > obj.get_denominator_one())
 	{
-		int res, res2;
-		res = obj.get_namerator_one() % obj.get_denominator_one();
-		res2 = obj.get_namerator_one();
-		//obj.get_namerator_one() = res;
-
-
-		cout << res << res2 << "/" << obj.get_namerator_one() << endl;				
+		int res1, res2;
+		res1 = obj.get_namerator_one()/ obj.get_denominator_one();
+		res2 = obj.get_namerator_one() % obj.get_denominator_one();
+		
+		if (res2 == 0)
+			cout << res1 << endl;
+		else
+			cout << res1 << "(" << res2 << "/" << obj.get_denominator_one() <<")"<< endl;
 	}else 
 		cout << obj.get_namerator_one() << "/" << obj.get_denominator_one() << endl;
 	
 	if (obj.get_namerator_two() > obj.get_denominator_two())
 	{
-		int res, res2;
-		res = obj.get_namerator_two() % obj.get_denominator_two();
-		res2 = obj.get_namerator_two();
-
-		cout << res << res2 << "/" << obj.get_namerator_one() << endl;				
+		int res1, res2;
+		res1 = obj.get_namerator_two()/ obj.get_denominator_two();
+		res2 = obj.get_namerator_two() % obj.get_denominator_two();
+		
+		if (res2 == 0)
+			cout << res1 << endl;
+		else
+			cout << res1 << "(" << res2 << "/" << obj.get_denominator_two() << ")" << endl;
 	}else 
 		cout << obj.get_namerator_two() << "/" << obj.get_denominator_two() << endl;
+}
 
+void to_improper()		//Переводит правильную дробь в неправильную: 2(3/4) => 11/4
+{
 
-
-	
 
 }
 /*
