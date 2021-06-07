@@ -17,72 +17,57 @@ using namespace std;
 
 class Fraction
 {
-	int namerator_one;
-	int denominator_one;
-	int namerator_two;
-	int denominator_two;
+	int namerator_one;									// объявление переменной для числителя
+	int denominator_one;								//объявление переменной для знаменателя
+
 
 
 public:
 	
 	//GET methods
-	int get_namerator_one()const
+	int get_namerator_one()const						//GET метод для числителя
 	{
 		return namerator_one;
 	}	
-	int get_namerator_two()const
-	{
-		return namerator_two;
-	}	
-	int get_denominator_one()const
+	
+	int get_denominator_one()const						//GET метод для знаменателя
 	{
 		return denominator_one;
 	}	
-	int get_denominator_two()const
-	{
-		return denominator_two;
-	}
+
 	
 	//SET methods
-	void set_namerator_one(int namerator_one)
+	void set_namerator_one(int namerator_one)			//SET метод для числителя
 	{
 		this->namerator_one = namerator_one;
 	}
-	void set_namerator_two(int namerator_two)
-	{
-		this->namerator_two = namerator_two;
-	}
-	void set_denominator_one(int denominator_one)
+
+	void set_denominator_one(int denominator_one)		//SET метод для знаменателя
 	{
 		this->denominator_one = denominator_one;
 	}
-	void set_denominator_two(int denominator_two)
-	{
-		this->denominator_two = denominator_two;
-	}
-	
+
 	//Default constraction
 	Fraction()
 	{
 		namerator_one = 0;
 		denominator_one = 0;
-		namerator_two = 0;
-		denominator_two = 0;
-		//cout << "Default Constraction" << endl;
+
+		cout << "Default Constraction" << endl;
 	}
+	
+	Fraction(int namerator_one, int denominator_one)
+	{
+		this->namerator_one = namerator_one;
+		this->denominator_one = denominator_one;
+
+		//cout << namerator_one << "/" << denominator_one << endl;
+		cout << "Constructor:\t" << this << endl;
+	}
+
+
 
 	/*
-
-	Fraction operator+()
-	{
-
-	}
-
-	Fraction operator-()
-	{
-
-	}
-
 	Fraction operator*()
 	{
 
@@ -108,275 +93,100 @@ public:
 
 	}
 */
-
-
-	void input_values()
+	void print()
 	{
-		cout << "Введите значение числителя первой дроби \n";
-		cin >> namerator_one;
-		cout << "Введите значение знаменателя первой дроби\n";
-		cin >> denominator_one;
-		cout << "Введите значение числителя второй дроби\n";
-		cin >> namerator_two;
-		cout << "Введите значение знаменателя второй дроби\n";
-		cin >> denominator_two;
+		cout << namerator_one << "/" << denominator_one << endl;
 	}
 
+	~Fraction()
+	{
+		cout << "Destructor:\t" << this << endl;
+	}
 
-
-
-	//~Fraction();
 
 private:
 
 };
 
-
-/*
-Fraction::Fraction()
+//Перегрузка оператора +
+Fraction operator+(const Fraction& left, const Fraction& right)
 {
+	Fraction result;
+	
+	if (left.get_denominator_one() == 0 || right.get_denominator_one() == 0)
+	{
+		cout << "На ноль делить нельзя" << endl;
+		return result;
+	}
+
+
+	if (left.get_denominator_one() == right.get_denominator_one())
+	{
+		result.set_namerator_one(left.get_namerator_one() + right.get_namerator_one());
+		result.set_denominator_one(left.get_denominator_one());
+	}
+	else
+	{
+		int nok;
+		nok = left.get_denominator_one() * right.get_denominator_one();
+		result.set_namerator_one((left.get_namerator_one() * (nok/left.get_denominator_one())) + (right.get_namerator_one() * (nok/right.get_denominator_one())));				
+		result.set_denominator_one(nok);
+														//добавить функцию сокращения дроби
+	}				
+		
+	return result;
 }
 
-Fraction::~Fraction()
+Fraction operator-(const Fraction& left, const Fraction& right)
 {
+	Fraction result;
+
+	if (left.get_denominator_one() == 0 || right.get_denominator_one() == 0)
+	{
+		cout << "На ноль делить нельзя" << endl;
+		return result;
+	}
+
+
+	if (left.get_denominator_one() == right.get_denominator_one())
+	{
+		result.set_namerator_one(left.get_namerator_one() - right.get_namerator_one());
+		result.set_denominator_one(left.get_denominator_one());
+	}
+	else
+	{
+		int nok;
+		nok = left.get_denominator_one() * right.get_denominator_one();
+		result.set_namerator_one((left.get_namerator_one() * (nok / left.get_denominator_one())) - (right.get_namerator_one() * (nok / right.get_denominator_one())));
+		result.set_denominator_one(nok);
+		//добавить функцию сокращения дроби
+	}
+
+	return result;
 }
-*/
+
+
+
+
 
 int main()
 {
 	setlocale(LC_ALL, "");
-	Fraction A;
-		A.input_values();
-
-	cout << "Выберите действие которое хотите проверить\n";
-
-	int choice;
-	do 
-	{
-		cout << "1. Арифметические операторы\n";
-		cout << "2. Составные присваивания\n";
-		cout << "3. Инкремент/Декремент\n";
-		cout << "4. Операторы сравнения\n";
-		cout << "5. Операторы для работы с потоками\n";
-		cout << "0. Выход\n";
-		cin >> choice;
-
-		switch (choice)
-		{
-		case 1:
-		{
-			int arithmetic_operators;
-			do 
-			{
-				cout << "1. Сложение дробей\n";
-				cout << "2. Вычитание дробей\n";
-				cout << "3. Умножение дробей\n";
-				cout << "4. Деление дробей\n";
-				cout << "0. Назад\n";
-				cin >> arithmetic_operators;
-
-				switch (arithmetic_operators)
-				{
-				case 1:
-				{
-
-				}
-				break;
-				case 2:
-				{
-
-				}
-				break;
-				case 3:
-				{
-
-				}
-				break;
-				case 4:
-				{
-
-				}
-				break;
-
-				default:
-					break;
-				}
-			
-			} while (arithmetic_operators);
-		}
-		break;
-
-		case 2:
-		{
-			int compound_assignments;
-			do 
-			{
-				cout << "1. Оператор +=\n";
-				cout << "2. Оператор -=\n";
-				cout << "3. Оператор *=\n";
-				cout << "4. Оператор /=\n";
-				cout << "0. Назад\n";
-				cin >> compound_assignments;
-
-				switch (compound_assignments)
-				{
-				case 1:
-				{
-
-				}
-				break;
-				case 2:
-				{
-
-				}
-				break;
-				case 3:
-				{
-
-				}
-				break;
-				case 4:
-				{
-
-				}
-				break;
-				default:
-					break;
-				}
+	
 
 
-			} while (compound_assignments);
-		}
-		break;
+	cout << "Вывод простой дроби:\t" << endl;
+	Fraction A(1,3);
+	A.print();
+	
+	cout << "Сложение дробей:\t" << endl;
+	Fraction B(1, 6);
+	Fraction C = A + B;
+		C.print();
 
-		case 3:
-		{
-			int unary_operators;
-			do
-			{
-				cout << "1. Префиксный инкремент (++x)\n";
-				cout << "2. Префиксный декремент (--x)\n";
-				cout << "3. Постфиксный инкремент (x++)\n";
-				cout << "4. Постфиксный декремент (x--)\n";
-				cout << "0. Назад\n";
-				cin >> unary_operators;
-				switch (unary_operators)
-				{
-				case 1:
-				{
+	cout << "Вычитание дробей:\t" << endl;
+	C = A - B;
+	C.print();
 
-				}
-				break;
-				case 2:
-				{
-
-				}
-				break;
-				case 3:
-				{
-
-				}
-				break;
-				case 4:
-				{
-
-				}
-				break;
-				default:
-					break;
-				}
-			} while (unary_operators);
-		}
-		break;
-
-		case 4:
-		{
-			int comparison_operators;
-			do
-			{
-				cout << "1. Оператор ==\n";
-				cout << "2. Оператор !=\n";
-				cout << "3. Оператор >\n";
-				cout << "4. Оператор <\n";
-				cout << "5. Оператор >=\n";
-				cout << "6. Оператор <=\n";
-				cout << "0. Назад\n";
-
-				cin>> comparison_operators;
-				switch (comparison_operators)
-				{
-				case 1:
-				{
-
-				}
-				break;
-				case 2:
-				{
-
-				}
-				break;
-				case 3:
-				{
-
-				}
-				break;
-				case 4:
-				{
-
-				}
-				break;
-				case 5:
-				{
-
-				}
-				break;
-				case 6:
-				{
-
-				}
-				break;
-				default:
-					break;
-				}
-			} while (comparison_operators);
-		}
-		break;
-
-		case 5:
-		{
-			int stream_operators;
-			do
-			{
-				cout << "1. Оператор <<\n";
-				cout << "1. Оператор >>\n";
-				cin >> stream_operators;
-
-				switch (stream_operators)
-				{
-				case 1:
-				{
-
-				}
-				break;
-				case 2:
-				{
-
-				}
-				break;
-				default:
-					break;
-				}
-
-
-
-			} while (stream_operators);
-		}
-		break;
-
-		default:
-			break;
-		}
-
-
-	} while (choice);
+	
 }
