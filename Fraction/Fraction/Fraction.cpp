@@ -53,7 +53,7 @@ public:
 		namerator_one = 0;
 		denominator_one = 0;
 
-		cout << "Default Constraction" << endl;
+		//cout << "Default Constraction" << endl;
 	}
 	
 	Fraction(int namerator_one, int denominator_one)
@@ -62,20 +62,13 @@ public:
 		this->denominator_one = denominator_one;
 
 		//cout << namerator_one << "/" << denominator_one << endl;
-		cout << "Constructor:\t" << this << endl;
+		//cout << "Constructor:\t" << this << endl;
 	}
 
 
 
 	/*
-	Fraction operator*()
-	{
 
-	}
-	Fraction operator/()
-	{
-
-	}	
 	Fraction operator+=()
 	{
 
@@ -100,7 +93,7 @@ public:
 
 	~Fraction()
 	{
-		cout << "Destructor:\t" << this << endl;
+		//cout << "Destructor:\t" << this << endl;
 	}
 
 
@@ -137,6 +130,7 @@ Fraction operator+(const Fraction& left, const Fraction& right)
 	return result;
 }
 
+//Перегрузка оператора -
 Fraction operator-(const Fraction& left, const Fraction& right)
 {
 	Fraction result;
@@ -146,7 +140,6 @@ Fraction operator-(const Fraction& left, const Fraction& right)
 		cout << "На ноль делить нельзя" << endl;
 		return result;
 	}
-
 
 	if (left.get_denominator_one() == right.get_denominator_one())
 	{
@@ -159,13 +152,28 @@ Fraction operator-(const Fraction& left, const Fraction& right)
 		nok = left.get_denominator_one() * right.get_denominator_one();
 		result.set_namerator_one((left.get_namerator_one() * (nok / left.get_denominator_one())) - (right.get_namerator_one() * (nok / right.get_denominator_one())));
 		result.set_denominator_one(nok);
-		//добавить функцию сокращения дроби
+														//добавить функцию сокращения дроби
 	}
 
 	return result;
 }
 
 
+//Перегрузка оператора *
+Fraction operator*(const Fraction& left, const Fraction& right)
+{
+
+
+
+}
+
+//Перегрузка оператора /
+Fraction operator/(const Fraction& left, const Fraction& right)
+{
+
+
+
+}
 
 
 
@@ -173,14 +181,27 @@ int main()
 {
 	setlocale(LC_ALL, "");
 	
+	int a;
+	cout << "Введите значение числителя:\t" << endl;
+	cin >> a;
+	int b;
+	cout << "Введите значение знаменателя:\t" << endl;
+	cin >> b;
 
 
 	cout << "Вывод простой дроби:\t" << endl;
-	Fraction A(1,3);
+	Fraction A(a,b);
 	A.print();
 	
+	int c;
+	cout << "Введите значение числителя второй дроби:\t" << endl;
+	cin >> c;
+	int d;
+	cout << "Введите значение знаменателя второй дроби:\t" << endl;
+	cin >> d;
+
 	cout << "Сложение дробей:\t" << endl;
-	Fraction B(1, 6);
+	Fraction B(c, d);
 	Fraction C = A + B;
 		C.print();
 
