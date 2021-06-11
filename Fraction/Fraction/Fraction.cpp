@@ -7,7 +7,8 @@ using namespace std;
 -to_proper();		//Неправильную дробь переводит в правильную: 11/4 => 2(3/4)
 -to_improper();		//Переводит правильную дробь в неправильную: 2(3/4) => 11/4
 -reduce();			//Сокращает дробь: 5/10 => 1/2;
-1. Арифметические операторы : +, -, *, / ;
+
++++++++++ 1. Арифметические операторы : +, -, *, / ;
 2. Составные присваивания : +=, -=, *=, /=;
 3. Increment / Decrement(++ / --);
 4. Операторы сравнения : == , != , > , < , >= , <= ;
@@ -15,12 +16,14 @@ using namespace std;
 */
 
 
+
+
 class Fraction
 {
 	int namerator_one;									// объявление переменной для числителя
 	int denominator_one;								//объявление переменной для знаменателя
 
-
+	//friend Fraction operator+(const Fraction& left, const Fraction& right);
 
 public:
 	
@@ -65,14 +68,17 @@ public:
 		//cout << "Constructor:\t" << this << endl;
 	}
 
-
+	//Составные присваивания (оператор +=)
+	Fraction& operator+=(const Fraction& other)
+	{
+		this->set_namerator_one(this->namerator_one*other.denominator_one + other.denominator_one*this->denominator_one);
+		this->set_denominator_one(this->denominator_one*other.denominator_one);
+		return *this;
+	}
 
 	/*
 
-	Fraction operator+=()
-	{
 
-	}	
 	Fraction operator-=()
 	{
 
@@ -85,6 +91,14 @@ public:
 	{
 
 	}
+
+	Fraction operator++()
+	{
+	this->set_namerator_one(this->namerator_one += other.namerator_one);
+	this->set_denominator_one(this->denominator_one);
+	return *this;
+	}
+
 */
 	void print()
 	{
@@ -130,6 +144,8 @@ Fraction operator+(const Fraction& left, const Fraction& right)
 	return result;
 }
 
+
+
 //Перегрузка оператора -
 Fraction operator-(const Fraction& left, const Fraction& right)
 {
@@ -158,21 +174,24 @@ Fraction operator-(const Fraction& left, const Fraction& right)
 	return result;
 }
 
-
 //Перегрузка оператора *
 Fraction operator*(const Fraction& left, const Fraction& right)
 {
-
-
-
+	Fraction result;
+	result.set_namerator_one(left.get_namerator_one() * right.get_namerator_one());
+	result.set_denominator_one(left.get_denominator_one() * right.get_denominator_one());
+	return result;
+														//добавить функцию сокращения дроби
 }
 
 //Перегрузка оператора /
 Fraction operator/(const Fraction& left, const Fraction& right)
 {
-
-
-
+	Fraction result;
+	result.set_namerator_one(left.get_namerator_one() * right.get_denominator_one());
+	result.set_denominator_one(left.get_denominator_one() * right.get_namerator_one());
+	return result;
+														//добавить функцию сокращения дроби
 }
 
 
@@ -187,9 +206,7 @@ int main()
 	int b;
 	cout << "Введите значение знаменателя:\t" << endl;
 	cin >> b;
-
-
-	cout << "Вывод простой дроби:\t" << endl;
+	cout << "Вывод первой дроби:\t" << endl;
 	Fraction A(a,b);
 	A.print();
 	
@@ -199,15 +216,29 @@ int main()
 	int d;
 	cout << "Введите значение знаменателя второй дроби:\t" << endl;
 	cin >> d;
-
-	cout << "Сложение дробей:\t" << endl;
 	Fraction B(c, d);
-	Fraction C = A + B;
-		C.print();
+	cout << "Вывод второй дроби:\t" << endl;
+	B.print();
+
+	Fraction C;
+	cout << "Сложение дробей:\t" << endl;
+	C = A + B;
+	C.print();
 
 	cout << "Вычитание дробей:\t" << endl;
 	C = A - B;
 	C.print();
 
-	
+	cout << "Умножение дробей:\t" << endl;
+	C = A * B;
+	C.print();
+
+	cout << "Деление дробей:\t" << endl;
+	C = A / B;
+	C.print();
+
+	cout << "Составные присваивания +=:\t" << endl;
+	A += B;
+	A.print();
+
 }
