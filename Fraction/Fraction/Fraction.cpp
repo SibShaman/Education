@@ -20,69 +20,63 @@ using namespace std;
 
 class Fraction
 {
-	int namerator_one;									// объявление переменной для числителя
-	int denominator_one;								//объявление переменной для знаменателя
+	int namerator;									// объявление переменной для числителя
+	int denominator;								//объявление переменной для знаменателя
 
-	//friend Fraction operator+(const Fraction& left, const Fraction& right);
 
 public:
 	
 	//GET methods
-	int get_namerator_one()const						//GET метод для числителя
+	int get_namerator()const						//GET метод для числителя
 	{
-		return namerator_one;
+		return namerator;
 	}	
 	
-	int get_denominator_one()const						//GET метод для знаменателя
+	int get_denominator()const						//GET метод для знаменателя
 	{
-		return denominator_one;
+		return denominator;
 	}	
-
-	
+		
 	//SET methods
-	void set_namerator_one(int namerator_one)			//SET метод для числителя
+	void set_namerator(int namerator)			//SET метод для числителя
 	{
-		this->namerator_one = namerator_one;
+		this->namerator = namerator;
 	}
 
-	void set_denominator_one(int denominator_one)		//SET метод для знаменателя
+	void set_denominator(int denominator)		//SET метод для знаменателя
 	{
-		this->denominator_one = denominator_one;
+		this->denominator = denominator;
 	}
 
 	//Default constraction
 	Fraction()
 	{
-		namerator_one = 0;
-		denominator_one = 0;
+		namerator = 0;
+		denominator = 0;
 
 		//cout << "Default Constraction" << endl;
 	}
 	
-	Fraction(int namerator_one, int denominator_one)
+	Fraction(int namerator, int denominator)
 	{
-		this->namerator_one = namerator_one;
-		this->denominator_one = denominator_one;
+		this->namerator = namerator;
+		this->denominator = denominator;
 
 		//cout << namerator_one << "/" << denominator_one << endl;
 		//cout << "Constructor:\t" << this << endl;
 	}
 
-	//Составные присваивания (оператор +=)
-	Fraction& operator+=(const Fraction& other)
+	Fraction(const Fraction& other) //конструктор копирования 
 	{
-		this->set_namerator_one(this->namerator_one*other.denominator_one + other.denominator_one*this->denominator_one);
-		this->set_denominator_one(this->denominator_one*other.denominator_one);
-		return *this;
+		this->namerator = other.namerator;
+		this->denominator = other.denominator;
+		//cout << "CopyConstructor: " << this << endl;
 	}
 
+
+
+
 	/*
-
-
-	Fraction operator-=()
-	{
-
-	}	
 	Fraction operator*=()
 	{
 
@@ -98,19 +92,60 @@ public:
 	this->set_denominator_one(this->denominator_one);
 	return *this;
 	}
-
 */
-	void print()
-	{
-		cout << namerator_one << "/" << denominator_one << endl;
-	}
+	
 
 	~Fraction()
 	{
 		//cout << "Destructor:\t" << this << endl;
 	}
+	
+	void print()
+	{
+		cout << namerator << "/" << denominator << endl;
+	}
+
+	
+	void operator=(const Fraction& other)	//Оператор присвоить
+	{
+		this->namerator = other.namerator;
+		this->denominator = other.denominator;
+		//cout << "CopyAssignment: \t\t " << this << endl;
+	}
 
 
+	//Составные присваивания (оператор +=)
+	Fraction& operator+=(const Fraction& other)
+	{
+		if (this->denominator == other.denominator)
+		{
+			this->set_namerator(this->namerator + other.namerator);
+			this->set_denominator(this->denominator);
+		}
+		else
+		{
+			this->set_namerator(this->namerator * other.denominator + other.namerator * this->denominator);
+			this->set_denominator(this->denominator * other.denominator);
+		}
+		return *this;
+	}
+
+	Fraction& operator-=(const Fraction& other)
+	{
+		if (this->denominator == other.denominator)
+		{
+			this->set_namerator(this->namerator - other.namerator);
+			this->set_denominator(this->denominator);
+		}
+		else
+		{
+			int nod;
+			nod = this->denominator * other.denominator;
+			this->set_namerator((this->namerator * (nod / other.denominator)) - (other.namerator * (nod / this->denominator)));
+			this->set_denominator(nod);
+		}
+		return *this;
+	}
 private:
 
 };
@@ -120,54 +155,52 @@ Fraction operator+(const Fraction& left, const Fraction& right)
 {
 	Fraction result;
 	
-	if (left.get_denominator_one() == 0 || right.get_denominator_one() == 0)
+	if (left.get_denominator() == 0 || right.get_denominator() == 0)
 	{
 		cout << "На ноль делить нельзя" << endl;
 		return result;
 	}
 
 
-	if (left.get_denominator_one() == right.get_denominator_one())
+	if (left.get_denominator() == right.get_denominator())
 	{
-		result.set_namerator_one(left.get_namerator_one() + right.get_namerator_one());
-		result.set_denominator_one(left.get_denominator_one());
+		result.set_namerator(left.get_namerator() + right.get_namerator());
+		result.set_denominator(left.get_denominator());
 	}
 	else
 	{
-		int nok;
-		nok = left.get_denominator_one() * right.get_denominator_one();
-		result.set_namerator_one((left.get_namerator_one() * (nok/left.get_denominator_one())) + (right.get_namerator_one() * (nok/right.get_denominator_one())));				
-		result.set_denominator_one(nok);
+		int nod;
+		nod = left.get_denominator() * right.get_denominator();
+		result.set_namerator((left.get_namerator() * (nod/left.get_denominator())) + (right.get_namerator() * (nod/right.get_denominator())));				
+		result.set_denominator(nod);
 														//добавить функцию сокращения дроби
 	}				
 		
 	return result;
 }
 
-
-
 //Перегрузка оператора -
 Fraction operator-(const Fraction& left, const Fraction& right)
 {
 	Fraction result;
 
-	if (left.get_denominator_one() == 0 || right.get_denominator_one() == 0)
+	if (left.get_denominator() == 0 || right.get_denominator() == 0)
 	{
 		cout << "На ноль делить нельзя" << endl;
 		return result;
 	}
 
-	if (left.get_denominator_one() == right.get_denominator_one())
+	if (left.get_denominator() == right.get_denominator())
 	{
-		result.set_namerator_one(left.get_namerator_one() - right.get_namerator_one());
-		result.set_denominator_one(left.get_denominator_one());
+		result.set_namerator(left.get_namerator() - right.get_namerator());
+		result.set_denominator(left.get_denominator());
 	}
 	else
 	{
-		int nok;
-		nok = left.get_denominator_one() * right.get_denominator_one();
-		result.set_namerator_one((left.get_namerator_one() * (nok / left.get_denominator_one())) - (right.get_namerator_one() * (nok / right.get_denominator_one())));
-		result.set_denominator_one(nok);
+		int nod;
+		nod = left.get_denominator() * right.get_denominator();
+		result.set_namerator((left.get_namerator() * (nod / left.get_denominator())) - (right.get_namerator() * (nod / right.get_denominator())));
+		result.set_denominator(nod);
 														//добавить функцию сокращения дроби
 	}
 
@@ -178,8 +211,8 @@ Fraction operator-(const Fraction& left, const Fraction& right)
 Fraction operator*(const Fraction& left, const Fraction& right)
 {
 	Fraction result;
-	result.set_namerator_one(left.get_namerator_one() * right.get_namerator_one());
-	result.set_denominator_one(left.get_denominator_one() * right.get_denominator_one());
+	result.set_namerator(left.get_namerator() * right.get_namerator());
+	result.set_denominator(left.get_denominator() * right.get_denominator());
 	return result;
 														//добавить функцию сокращения дроби
 }
@@ -188,8 +221,8 @@ Fraction operator*(const Fraction& left, const Fraction& right)
 Fraction operator/(const Fraction& left, const Fraction& right)
 {
 	Fraction result;
-	result.set_namerator_one(left.get_namerator_one() * right.get_denominator_one());
-	result.set_denominator_one(left.get_denominator_one() * right.get_namerator_one());
+	result.set_namerator(left.get_namerator() * right.get_denominator());
+	result.set_denominator(left.get_denominator() * right.get_namerator());
 	return result;
 														//добавить функцию сокращения дроби
 }
@@ -240,5 +273,14 @@ int main()
 	cout << "Составные присваивания +=:\t" << endl;
 	A += B;
 	A.print();
+
+
+	cout << "Составные присваивания -=:\t" << endl;
+	(A -= B).print();
+	
+
+
+
+
 
 }
