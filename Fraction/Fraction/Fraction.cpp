@@ -106,11 +106,11 @@ public:
 	}
 
 	
-	void operator=(const Fraction& other)	//Оператор присвоить
+	Fraction& operator=(const Fraction& other)	//Оператор присвоить
 	{
 		this->namerator = other.namerator;
 		this->denominator = other.denominator;
-		//cout << "CopyAssignment: \t\t " << this << endl;
+		return *this;
 	}
 
 
@@ -130,7 +130,7 @@ public:
 		return *this;
 	}
 
-	Fraction& operator-=(const Fraction& other)
+	Fraction& operator-=(Fraction& other)
 	{
 		if (this->denominator == other.denominator)
 		{
@@ -139,13 +139,18 @@ public:
 		}
 		else
 		{
-			int nod;
-			nod = this->denominator * other.denominator;
-			this->set_namerator((this->namerator * (nod / other.denominator)) - (other.namerator * (nod / this->denominator)));
-			this->set_denominator(nod);
-		}
+			this->set_namerator(this->namerator * other.denominator - other.namerator * this->denominator);
+			this->set_denominator(this->denominator * other.denominator);
+		}		
 		return *this;
 	}
+
+
+
+
+
+
+
 private:
 
 };
@@ -274,9 +279,9 @@ int main()
 	A += B;
 	A.print();
 
-
+	Fraction D(a, b);
 	cout << "Составные присваивания -=:\t" << endl;
-	(A -= B).print();
+	(D -= B).print();
 	
 
 
