@@ -123,7 +123,7 @@ public:
 		}
 		return *this;
 	}
-
+	//Составные присваивания (оператор -=)
 	Fraction& operator-=(const Fraction& other)
 	{
 		if (this->denominator == other.denominator)
@@ -138,13 +138,14 @@ public:
 		}		
 		return *this;
 	}
+	//Составные присваивания (оператор *=)
 	Fraction& operator*=(const Fraction& other)
 	{
 		this->set_namerator(this->namerator * other.namerator);
 		this->set_denominator(this->denominator * other.denominator);
 		return *this;
 	}
-
+	//Составные присваивания (оператор /=)
 	Fraction& operator/=(const Fraction& other)
 	{
 		this->set_namerator(this->namerator * other.denominator);
@@ -243,57 +244,44 @@ int main()
 	setlocale(LC_ALL, "");
 	
 	int a;
-	cout << "Введите значение числителя:\t" << endl;
-	cin >> a;
+	cout << "Введите значение числителя:\t" << endl; 	cin >> a;
 	int b;
-	cout << "Введите значение знаменателя:\t" << endl;
-	cin >> b;
+	cout << "Введите значение знаменателя:\t" << endl; 	cin >> b;
 	cout << "Вывод первой дроби:\t" << endl;
 	Fraction A(a,b);
 	A.print();
 	
 	int c;
-	cout << "Введите значение числителя второй дроби:\t" << endl;
-	cin >> c;
+	cout << "Введите значение числителя второй дроби:\t" << endl; 	cin >> c;
 	int d;
-	cout << "Введите значение знаменателя второй дроби:\t" << endl;
-	cin >> d;
+	cout << "Введите значение знаменателя второй дроби:\t" << endl; cin >> d;
 	Fraction B(c, d);
 	cout << "Вывод второй дроби:\t" << endl;
 	B.print();
 
 	Fraction C;
-	cout << "Сложение дробей:\t" << endl;
-	C = A + B;
+	cout << "Сложение дробей:\t" << endl; 	C = A + B;
 	C.print();
 
-	cout << "Вычитание дробей:\t" << endl;
-	C = A - B;
+	cout << "Вычитание дробей:\t" << endl; 	C = A - B;
 	C.print();
 
-	cout << "Умножение дробей:\t" << endl;
-	C = A * B;
+	cout << "Умножение дробей:\t" << endl; 	C = A * B;
 	C.print();
 
-	cout << "Деление дробей:\t" << endl;
-	C = A / B;
+	cout << "Деление дробей:\t" << endl; 	C = A / B;
 	C.print();
 
-	cout << "Составные присваивания +=:\t" << endl;
-	A += B;
-	A.print();
+	cout << "Составные присваивания +=:\t" << endl; (A += B).print();
 
 	Fraction D(a, b);
-	cout << "Составные присваивания -=:\t" << endl;
-	(D -= B).print();
+	cout << "Составные присваивания -=:\t" << endl; (D -= B).print();
 	
 	Fraction E(a, b);
-	cout << "Составные присваивания *=:\t" << endl;
-	(E *= B).print();
+	cout << "Составные присваивания *=:\t" << endl; (E *= B).print();
 	
 	Fraction F(a, b);
-	cout << "Составные присваивания /=:\t" << endl;
-	(F /= B).print();
+	cout << "Составные присваивания /=:\t" << endl; (F /= B).print();
 	
 
 
