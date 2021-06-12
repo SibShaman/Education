@@ -9,7 +9,7 @@ using namespace std;
 -reduce();			//Сокращает дробь: 5/10 => 1/2;
 
 +++++++++ 1. Арифметические операторы : +, -, *, / ;
-2. Составные присваивания : +=, -=, *=, /=;
++++++++++ 2. Составные присваивания : +=, -=, *=, /=;
 3. Increment / Decrement(++ / --);
 4. Операторы сравнения : == , != , > , < , >= , <= ;
 5. Операторы для работы с потоками : << , >>
@@ -77,14 +77,8 @@ public:
 
 
 	/*
-	Fraction operator*=()
-	{
 
-	}	
-	Fraction operator/=()
-	{
 
-	}
 
 	Fraction operator++()
 	{
@@ -130,7 +124,7 @@ public:
 		return *this;
 	}
 
-	Fraction& operator-=(Fraction& other)
+	Fraction& operator-=(const Fraction& other)
 	{
 		if (this->denominator == other.denominator)
 		{
@@ -144,9 +138,19 @@ public:
 		}		
 		return *this;
 	}
+	Fraction& operator*=(const Fraction& other)
+	{
+		this->set_namerator(this->namerator * other.namerator);
+		this->set_denominator(this->denominator * other.denominator);
+		return *this;
+	}
 
-
-
+	Fraction& operator/=(const Fraction& other)
+	{
+		this->set_namerator(this->namerator * other.denominator);
+		this->set_denominator(this->denominator * other.namerator);
+		return *this;
+	}
 
 
 
@@ -282,6 +286,14 @@ int main()
 	Fraction D(a, b);
 	cout << "Составные присваивания -=:\t" << endl;
 	(D -= B).print();
+	
+	Fraction E(a, b);
+	cout << "Составные присваивания *=:\t" << endl;
+	(E *= B).print();
+	
+	Fraction F(a, b);
+	cout << "Составные присваивания /=:\t" << endl;
+	(F /= B).print();
 	
 
 
