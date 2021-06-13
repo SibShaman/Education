@@ -10,13 +10,10 @@ using namespace std;
 
 +++++++++ 1. Арифметические операторы : +, -, *, / ;
 +++++++++ 2. Составные присваивания : +=, -=, *=, /=;
-3. Increment / Decrement(++ / --);
-4. Операторы сравнения : == , != , > , < , >= , <= ;
-5. Операторы для работы с потоками : << , >>
++++++++++ 3. Increment / Decrement(++ / --);
++++++++++ 4. Операторы сравнения : == , != , > , < , >= , <= ;
++++++++++ 5. Операторы для работы с потоками : << , >>
 */
-
-
-
 
 class Fraction
 {
@@ -53,42 +50,20 @@ public:
 	{
 		namerator = 0;
 		denominator = 0;
-
-		//cout << "Default Constraction" << endl;
 	}
 	
 	Fraction(int namerator, int denominator)
 	{
 		this->namerator = namerator;
 		this->denominator = denominator;
-
-		//cout << namerator_one << "/" << denominator_one << endl;
-		//cout << "Constructor:\t" << this << endl;
 	}
 
 	Fraction(const Fraction& other) //конструктор копирования 
 	{
 		this->namerator = other.namerator;
 		this->denominator = other.denominator;
-		//cout << "CopyConstructor: " << this << endl;
 	}
-
-
-
-
-	/*
-
-
-
-	Fraction operator++()
-	{
-	this->set_namerator_one(this->namerator_one += other.namerator_one);
-	this->set_denominator_one(this->denominator_one);
-	return *this;
-	}
-*/
 	
-
 	~Fraction()
 	{
 		//cout << "Destructor:\t" << this << endl;
@@ -98,16 +73,13 @@ public:
 	{
 		cout << namerator << "/" << denominator << endl;
 	}
-
-	
+	//Оператор присваивания (=)
 	Fraction& operator=(const Fraction& other)	//Оператор присвоить
 	{
 		this->namerator = other.namerator;
 		this->denominator = other.denominator;
 		return *this;
 	}
-
-
 	//Составные присваивания (оператор +=)
 	Fraction& operator+=(const Fraction& other)
 	{
@@ -152,9 +124,32 @@ public:
 		this->set_denominator(this->denominator * other.namerator);
 		return *this;
 	}
+	//Prefix increment
+	Fraction& operator++()					
+	{
+		this->namerator++;
+		this->denominator;
+		return *this;
+	}
+	//Postfix increment
+	Fraction& operator++(int)  
+	{
+		Fraction old = *this;
+		++* this;			
+		return old;
+	}
+
+	void to_proper()
+	{
+
+	}
 
 
-
+	/*
+	- to_proper();		//Неправильную дробь переводит в правильную: 11/4 => 2(3/4)
+	-to_improper();		//Переводит правильную дробь в неправильную: 2(3/4) => 11/4
+	-reduce();			//Сокращает дробь: 5/10 => 1/2;
+	*/
 
 private:
 
@@ -188,7 +183,6 @@ Fraction operator+(const Fraction& left, const Fraction& right)
 		
 	return result;
 }
-
 //Перегрузка оператора -
 Fraction operator-(const Fraction& left, const Fraction& right)
 {
@@ -216,7 +210,6 @@ Fraction operator-(const Fraction& left, const Fraction& right)
 
 	return result;
 }
-
 //Перегрузка оператора *
 Fraction operator*(const Fraction& left, const Fraction& right)
 {
@@ -226,7 +219,6 @@ Fraction operator*(const Fraction& left, const Fraction& right)
 	return result;
 														//добавить функцию сокращения дроби
 }
-
 //Перегрузка оператора /
 Fraction operator/(const Fraction& left, const Fraction& right)
 {
@@ -236,6 +228,50 @@ Fraction operator/(const Fraction& left, const Fraction& right)
 	return result;
 														//добавить функцию сокращения дроби
 }
+
+//оператор ==
+bool operator==(const Fraction& left, const Fraction& right)
+{	
+	int nod = left.get_denominator() * right.get_denominator();
+	return ((left.get_namerator() * (nod / left.get_denominator())) == (right.get_namerator() * (nod / right.get_denominator())));
+	
+	
+	//return (left.get_x() == right.get_x() && left.get_y() == right.get_y()); // bool уже подразумевает true или false 
+																			 //поэтому не используем if
+}
+//оператор !=
+bool operator!=(const Fraction& left, const Fraction& right)
+{
+	return !(left == right);
+}
+//оператор >
+bool operator>(const Fraction& left, const Fraction& right)
+{
+	int nod = left.get_denominator() * right.get_denominator();
+	return ((left.get_namerator() * (nod / left.get_denominator())) > (right.get_namerator() * (nod / right.get_denominator())));
+}
+//оператор <
+bool operator<(const Fraction& left, const Fraction& right)
+{
+	return (right > left);
+}
+
+//перегрузка оператора <<
+ostream& operator<<(ostream& os, const Fraction& obj)      //используем ostream& чтобы не перегружать endl   
+{
+	os << " X= " << obj.get_namerator() << "\t" << "Y = " << obj.get_denominator();
+	return os;
+}
+//перегрузка оператора >>
+istream& operator>>(istream& is, Fraction& obj)      //используем istream& чтобы не перегружать endl   
+{
+	double x, y;
+	is >> x >> y;
+	obj.set_namerator(x);
+	obj.set_denominator(y);
+	return is;
+}
+
 
 
 
@@ -283,9 +319,32 @@ int main()
 	Fraction F(a, b);
 	cout << "Составные присваивания /=:\t" << endl; (F /= B).print();
 	
+	Fraction G(a, b);
+	cout << "Оператор префиксного инкремента: \t" << endl;	(++G).print();
+	//cout << "Оператор постфиксного инкремента: \t" << endl;	(G++).print();
+
+	cout << "Проверка операторов сравнения (==):\t" << endl; 
+	if (A == B) { cout << "дроби равны" << endl; }
+	else { cout << "дроби разные" << endl; }
+	cout << (A == B) << endl;;
+	
+	cout << "Проверка операторов сравнения (!=):\t" << endl; 
+	if (A != B) { cout << "дроби разные" << endl; }
+	else { cout << "дроби равны" << endl; }
+	cout << (A != B) << endl;;
+	
+	cout << "Проверка операторов сравнения (>):\t" << endl; 
+	if (A > B) { cout << "дробь А больше B" << endl; }
+	else { cout << "дробь B больше A" << endl; }
+	cout << (A > B) << endl;;
+	
+	cout << "Проверка операторов сравнения (<):\t" << endl; 
+	if (A == B) { cout << "дробь А меньше B" << endl; }
+	else { cout << "дробь B меньше A" << endl; }
+	cout << (A < B) << endl;;
+	
 
 
 
-
-
+	
 }
