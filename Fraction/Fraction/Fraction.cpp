@@ -19,7 +19,7 @@ class Fraction
 {
 	int namerator;									// объявление переменной для числителя
 	int denominator;								//объявление переменной для знаменателя
-
+	int integer;
 
 public:
 	
@@ -32,6 +32,10 @@ public:
 	int get_denominator()const						//GET метод для знаменателя
 	{
 		return denominator;
+	}
+	int get_integer()const						//GET метод для целого
+	{
+		return integer;
 	}	
 		
 	//SET methods
@@ -43,6 +47,10 @@ public:
 	void set_denominator(int denominator)		//SET метод для знаменателя
 	{
 		this->denominator = denominator;
+	}
+	void set_integer(int integer)		//SET метод для знаменателя
+	{
+		this->integer = integer;
 	}
 
 	//Default constraction
@@ -71,7 +79,16 @@ public:
 	
 	void print()
 	{
-		cout << namerator << "/" << denominator << endl;
+		if (namerator > denominator)
+		{
+			to_proper();
+		}
+		else
+		{
+			cout << namerator << "/" << denominator << endl;
+		}
+		
+		
 	}
 	//Оператор присваивания (=)
 	Fraction& operator=(const Fraction& other)	//Оператор присвоить
@@ -152,15 +169,18 @@ public:
 		--* this;
 		return old;
 	}
-
+	
+	//Неправильную дробь переводит в правильную: 11/4 => 2(3/4)
 	void to_proper()
 	{
-
+			integer = namerator / denominator;
+			this->namerator = namerator % denominator;
+			cout << integer << "(" << namerator << "/" << denominator << ")" << endl;	
 	}
 
 
 	/*
-	- to_proper();		//Неправильную дробь переводит в правильную: 11/4 => 2(3/4)
+	
 	-to_improper();		//Переводит правильную дробь в неправильную: 2(3/4) => 11/4
 	-reduce();			//Сокращает дробь: 5/10 => 1/2;
 	*/
@@ -172,15 +192,12 @@ private:
 //Перегрузка оператора +
 Fraction operator+(const Fraction& left, const Fraction& right)
 {
-	Fraction result;
-	
+	Fraction result;	
 	if (left.get_denominator() == 0 || right.get_denominator() == 0)
 	{
 		cout << "На ноль делить нельзя" << endl;
 		return result;
 	}
-
-
 	if (left.get_denominator() == right.get_denominator())
 	{
 		result.set_namerator(left.get_namerator() + right.get_namerator());
@@ -192,22 +209,18 @@ Fraction operator+(const Fraction& left, const Fraction& right)
 		nod = left.get_denominator() * right.get_denominator();
 		result.set_namerator((left.get_namerator() * (nod/left.get_denominator())) + (right.get_namerator() * (nod/right.get_denominator())));				
 		result.set_denominator(nod);
-														//добавить функцию сокращения дроби
-	}				
-		
+	}			
 	return result;
 }
 //Перегрузка оператора -
 Fraction operator-(const Fraction& left, const Fraction& right)
 {
 	Fraction result;
-
 	if (left.get_denominator() == 0 || right.get_denominator() == 0)
 	{
 		cout << "На ноль делить нельзя" << endl;
 		return result;
 	}
-
 	if (left.get_denominator() == right.get_denominator())
 	{
 		result.set_namerator(left.get_namerator() - right.get_namerator());
@@ -219,9 +232,7 @@ Fraction operator-(const Fraction& left, const Fraction& right)
 		nod = left.get_denominator() * right.get_denominator();
 		result.set_namerator((left.get_namerator() * (nod / left.get_denominator())) - (right.get_namerator() * (nod / right.get_denominator())));
 		result.set_denominator(nod);
-														//добавить функцию сокращения дроби
 	}
-
 	return result;
 }
 //Перегрузка оператора *
@@ -231,7 +242,7 @@ Fraction operator*(const Fraction& left, const Fraction& right)
 	result.set_namerator(left.get_namerator() * right.get_namerator());
 	result.set_denominator(left.get_denominator() * right.get_denominator());
 	return result;
-														//добавить функцию сокращения дроби
+
 }
 //Перегрузка оператора /
 Fraction operator/(const Fraction& left, const Fraction& right)
@@ -240,13 +251,13 @@ Fraction operator/(const Fraction& left, const Fraction& right)
 	result.set_namerator(left.get_namerator() * right.get_denominator());
 	result.set_denominator(left.get_denominator() * right.get_namerator());
 	return result;
-														//добавить функцию сокращения дроби
 }
 
 //оператор ==
 bool operator==(const Fraction& left, const Fraction& right)
 {	
 	int nod = left.get_denominator() * right.get_denominator();
+	return((left.get_namerator() * (nod / left.get_denominator())) == (right.get_namerator() * (nod / right.get_denominator())));
 }
 //оператор !=
 bool operator!=(const Fraction& left, const Fraction& right)
