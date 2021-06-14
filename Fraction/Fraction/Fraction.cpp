@@ -56,18 +56,21 @@ public:
 	//Default constraction
 	Fraction()
 	{
+		integer = 0;
 		namerator = 0;
 		denominator = 0;
 	}
 	
-	Fraction(int namerator, int denominator)
-	{
+	Fraction(int namerator, int denominator) 
+	{		
+		//this->integer = integer;
 		this->namerator = namerator;
 		this->denominator = denominator;
 	}
 
 	Fraction(const Fraction& other) //конструктор копирования 
 	{
+		this->integer = other.integer;
 		this->namerator = other.namerator;
 		this->denominator = other.denominator;
 	}
@@ -173,15 +176,20 @@ public:
 	//Неправильную дробь переводит в правильную: 11/4 => 2(3/4)
 	void to_proper()
 	{
-			integer = namerator / denominator;
-			this->namerator = namerator % denominator;
-			cout << integer << "(" << namerator << "/" << denominator << ")" << endl;	
+		integer = namerator / denominator;
+		this->namerator = namerator % denominator;
+		cout << integer << "(" << namerator << "/" << denominator << ")" << endl;	
 	}
 
+	//Переводит правильную дробь в неправильную: 2(3/4) => 11/4
+	void to_improper()
+	{
+
+	}
 
 	/*
 	
-	-to_improper();		//Переводит правильную дробь в неправильную: 2(3/4) => 11/4
+	-		
 	-reduce();			//Сокращает дробь: 5/10 => 1/2;
 	*/
 
@@ -285,7 +293,7 @@ ostream& operator<<(ostream& os, const Fraction& obj)      //используе�
 //перегрузка оператора >>
 istream& operator>>(istream& is, Fraction& obj)      //используем istream& чтобы не перегружать endl   
 {
-	double x, y;
+	int x, y;
 	is >> x >> y;
 	obj.set_namerator(x);
 	obj.set_denominator(y);
@@ -361,10 +369,5 @@ int main()
 	cout << "Проверка операторов сравнения (<):\t" << endl; 
 	if (A == B) { cout << "дробь А меньше B" << endl; }
 	else { cout << "дробь B меньше A" << endl; }
-	cout << (A < B) << endl;;
-	
-
-
-
-	
+	cout << (A < B) << endl;;	
 }
