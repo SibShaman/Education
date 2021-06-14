@@ -247,11 +247,6 @@ Fraction operator/(const Fraction& left, const Fraction& right)
 bool operator==(const Fraction& left, const Fraction& right)
 {	
 	int nod = left.get_denominator() * right.get_denominator();
-	return ((left.get_namerator() * (nod / left.get_denominator())) == (right.get_namerator() * (nod / right.get_denominator())));
-	
-	
-	//return (left.get_x() == right.get_x() && left.get_y() == right.get_y()); // bool уже подразумевает true или false 
-																			 //поэтому не используем if
 }
 //оператор !=
 bool operator!=(const Fraction& left, const Fraction& right)
