@@ -138,6 +138,20 @@ public:
 		++* this;			
 		return old;
 	}
+	//Prefix decrement
+	Fraction& operator--()
+	{
+		this->namerator--;
+		this->denominator;
+		return *this;
+	}
+	//Postfix decrement
+	Fraction& operator--(int)
+	{
+		Fraction old = *this;
+		--* this;
+		return old;
+	}
 
 	void to_proper()
 	{
