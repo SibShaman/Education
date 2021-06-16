@@ -82,9 +82,14 @@ public:
 	
 	void print()
 	{
-		if (namerator > denominator)
-		{
 			to_proper();
+			to_improper();
+			//reduce();
+		
+		if (namerator==denominator)
+		{
+			integer = namerator / denominator;
+			cout << integer << endl;
 		}
 		else
 		{
@@ -176,22 +181,43 @@ public:
 	//Неправильную дробь переводит в правильную: 11/4 => 2(3/4)
 	void to_proper()
 	{
-		integer = namerator / denominator;
-		this->namerator = namerator % denominator;
-		cout << integer << "(" << namerator << "/" << denominator << ")" << endl;	
+		if (namerator > denominator)
+		{
+			integer = namerator / denominator;
+			this->namerator = namerator % denominator;
+			if (this->namerator > 0)
+			{
+				cout << integer << "(" << namerator << "/" << denominator << ")" << endl;
+			}
+			else
+			{
+				cout << integer << endl;
+			}
+		}
 	}
 
 	//Переводит правильную дробь в неправильную: 2(3/4) => 11/4
 	void to_improper()
 	{
-
+		if (integer > 0)
+		{
+			this->namerator = integer * denominator + namerator;
+			cout << namerator << "/" << denominator << endl;
+		}
 	}
-
-	/*
+		
+	//Сокращает дробь: 5/10 => 1/2;		
+	void reduce()
+	{
+		while (denominator > namerator)
+		{
+			this->denominator = denominator - namerator;			
+		}
+		this->namerator = namerator / denominator;
+		this->denominator = denominator / this->denominator;
+		cout << namerator << "/" << denominator << endl;
+	}
 	
-	-		
-	-reduce();			//Сокращает дробь: 5/10 => 1/2;
-	*/
 
 private:
 
@@ -206,6 +232,7 @@ Fraction operator+(const Fraction& left, const Fraction& right)
 		cout << "На ноль делить нельзя" << endl;
 		return result;
 	}
+	
 	if (left.get_denominator() == right.get_denominator())
 	{
 		result.set_namerator(left.get_namerator() + right.get_namerator());
@@ -217,7 +244,9 @@ Fraction operator+(const Fraction& left, const Fraction& right)
 		nod = left.get_denominator() * right.get_denominator();
 		result.set_namerator((left.get_namerator() * (nod/left.get_denominator())) + (right.get_namerator() * (nod/right.get_denominator())));				
 		result.set_denominator(nod);
-	}			
+	}		
+
+	
 	return result;
 }
 //Перегрузка оператора -
