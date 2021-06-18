@@ -27,8 +27,7 @@ public:
 	int get_namerator()const						//GET метод для числителя
 	{
 		return namerator;
-	}	
-	
+	}		
 	int get_denominator()const						//GET метод для знаменателя
 	{
 		return denominator;
@@ -40,30 +39,21 @@ public:
 		
 	//SET methods
 	void set_namerator(int namerator)			//SET метод для числителя
-	{
+	{		
 		this->namerator = namerator;
 	}
-
 	void set_denominator(int denominator)		//SET метод для знаменателя
-	{
+	{		
 		this->denominator = denominator;
 	}
 	void set_integer(int integer)		//SET метод для знаменателя
 	{
 		this->integer = integer;
 	}
-
-	//Default constraction
-	Fraction()
-	{
-		integer = 0;
-		namerator = 0;
-		denominator = 0;
-	}
-	
-	Fraction(int namerator, int denominator) 
+		
+	Fraction(int namerator = 0, int denominator = 0, int integer = 0) 
 	{		
-		//this->integer = integer;
+		this->integer = integer;
 		this->namerator = namerator;
 		this->denominator = denominator;
 	}
@@ -82,9 +72,10 @@ public:
 	
 	void print()
 	{
+		//reduce();
+				
 			to_proper();
 			to_improper();
-			//reduce();
 		
 		if (namerator==denominator)
 		{
@@ -101,8 +92,9 @@ public:
 	//Оператор присваивания (=)
 	Fraction& operator=(const Fraction& other)	//Оператор присвоить
 	{
+		this->integer = other.integer;
 		this->namerator = other.namerator;
-		this->denominator = other.denominator;
+		this->denominator = other.denominator;		
 		return *this;
 	}
 	//Составные присваивания (оператор +=)
@@ -117,7 +109,8 @@ public:
 		{
 			this->set_namerator(this->namerator * other.denominator + other.namerator * this->denominator);
 			this->set_denominator(this->denominator * other.denominator);
-		}
+		}	
+		
 		return *this;
 	}
 	//Составные присваивания (оператор -=)
@@ -132,7 +125,8 @@ public:
 		{
 			this->set_namerator(this->namerator * other.denominator - other.namerator * this->denominator);
 			this->set_denominator(this->denominator * other.denominator);
-		}		
+		}			
+		
 		return *this;
 	}
 	//Составные присваивания (оператор *=)
@@ -140,6 +134,7 @@ public:
 	{
 		this->set_namerator(this->namerator * other.namerator);
 		this->set_denominator(this->denominator * other.denominator);
+		reduce();
 		return *this;
 	}
 	//Составные присваивания (оператор /=)
@@ -147,11 +142,12 @@ public:
 	{
 		this->set_namerator(this->namerator * other.denominator);
 		this->set_denominator(this->denominator * other.namerator);
+		
 		return *this;
 	}
 	//Prefix increment
 	Fraction& operator++()					
-	{
+	{		
 		this->namerator++;
 		this->denominator;
 		return *this;
@@ -159,6 +155,7 @@ public:
 	//Postfix increment
 	Fraction& operator++(int)  
 	{
+		
 		Fraction old = *this;
 		++* this;			
 		return old;
@@ -166,6 +163,7 @@ public:
 	//Prefix decrement
 	Fraction& operator--()
 	{
+		
 		this->namerator--;
 		this->denominator;
 		return *this;
@@ -173,6 +171,7 @@ public:
 	//Postfix decrement
 	Fraction& operator--(int)
 	{
+		
 		Fraction old = *this;
 		--* this;
 		return old;
@@ -181,41 +180,58 @@ public:
 	//Неправильную дробь переводит в правильную: 11/4 => 2(3/4)
 	void to_proper()
 	{
+		
 		if (namerator > denominator)
 		{
 			integer = namerator / denominator;
 			this->namerator = namerator % denominator;
 			if (this->namerator > 0)
 			{
-				cout << integer << "(" << namerator << "/" << denominator << ")" << endl;
+				cout << "Работа функции to_proper:" << integer << "(" << namerator << "/" << denominator << ")" << endl;
 			}
 			else
 			{
-				cout << integer << endl;
+				cout << "Работа функции to_proper:" << integer << endl;
 			}
+		}
+		if ((this->denominator % this->namerator == 0))
+		{
+			reduce();
 		}
 	}
 
 	//Переводит правильную дробь в неправильную: 2(3/4) => 11/4
 	void to_improper()
-	{
+	{		
 		if (integer > 0)
 		{
 			this->namerator = integer * denominator + namerator;
-			cout << namerator << "/" << denominator << endl;
+			cout<<"Работа функции to_improper:" << namerator << "/" << denominator << endl;
+		}
+		if ((this->denominator % this->namerator == 0))
+		{
+			reduce();
 		}
 	}
 		
 	//Сокращает дробь: 5/10 => 1/2;		
 	void reduce()
 	{
-		while (denominator > namerator)
-		{
-			this->denominator = denominator - namerator;			
-		}
-		this->namerator = namerator / denominator;
-		this->denominator = denominator / this->denominator;
-		cout << namerator << "/" << denominator << endl;
+			int a = namerator;
+			int b = denominator;
+			while (a != b)
+			{
+				if (a > b)
+				{
+					a -= b;
+				}
+				else
+				{
+					b -= a;
+				}
+				namerator /= a;
+				denominator /= b;
+			}
 	}
 	
 
@@ -225,7 +241,7 @@ private:
 
 //Перегрузка оператора +
 Fraction operator+(const Fraction& left, const Fraction& right)
-{
+{	
 	Fraction result;	
 	if (left.get_denominator() == 0 || right.get_denominator() == 0)
 	{
@@ -244,8 +260,7 @@ Fraction operator+(const Fraction& left, const Fraction& right)
 		nod = left.get_denominator() * right.get_denominator();
 		result.set_namerator((left.get_namerator() * (nod/left.get_denominator())) + (right.get_namerator() * (nod/right.get_denominator())));				
 		result.set_denominator(nod);
-	}		
-
+	}			
 	
 	return result;
 }
@@ -269,7 +284,7 @@ Fraction operator-(const Fraction& left, const Fraction& right)
 		nod = left.get_denominator() * right.get_denominator();
 		result.set_namerator((left.get_namerator() * (nod / left.get_denominator())) - (right.get_namerator() * (nod / right.get_denominator())));
 		result.set_denominator(nod);
-	}
+	}	
 	return result;
 }
 //Перегрузка оператора *
@@ -278,8 +293,8 @@ Fraction operator*(const Fraction& left, const Fraction& right)
 	Fraction result;
 	result.set_namerator(left.get_namerator() * right.get_namerator());
 	result.set_denominator(left.get_denominator() * right.get_denominator());
+	result.reduce();
 	return result;
-
 }
 //Перегрузка оператора /
 Fraction operator/(const Fraction& left, const Fraction& right)
@@ -341,14 +356,15 @@ int main()
 	int b;
 	cout << "Введите значение знаменателя:\t" << endl; 	cin >> b;
 	cout << "Вывод первой дроби:\t" << endl;
-	Fraction A(a,b);
+	int c = 0;
+	Fraction A(a,b,c);
 	A.print();
 	
-	int c;
-	cout << "Введите значение числителя второй дроби:\t" << endl; 	cin >> c;
 	int d;
-	cout << "Введите значение знаменателя второй дроби:\t" << endl; cin >> d;
-	Fraction B(c, d);
+	cout << "Введите значение числителя второй дроби:\t" << endl; 	cin >> d;
+	int e;
+	cout << "Введите значение знаменателя второй дроби:\t" << endl; cin >> e;
+	Fraction B(d,e,c);
 	cout << "Вывод второй дроби:\t" << endl;
 	B.print();
 
@@ -367,16 +383,16 @@ int main()
 
 	cout << "Составные присваивания +=:\t" << endl; (A += B).print();
 
-	Fraction D(a, b);
+	Fraction D(a, b, c);
 	cout << "Составные присваивания -=:\t" << endl; (D -= B).print();
 	
-	Fraction E(a, b);
+	Fraction E(a, b, c);
 	cout << "Составные присваивания *=:\t" << endl; (E *= B).print();
 	
-	Fraction F(a, b);
+	Fraction F(a, b, c);
 	cout << "Составные присваивания /=:\t" << endl; (F /= B).print();
 	
-	Fraction G(a, b);
+	Fraction G(a, b ,c);
 	cout << "Оператор префиксного инкремента: \t" << endl;	(++G).print();
 	//cout << "Оператор постфиксного инкремента: \t" << endl;	(G++).print();
 
